@@ -1,10 +1,16 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { PUZZLES } from '../puzzles';
 import { useProgress } from '../store/progress';
+import { notifyArrival } from '../lib/notify';
 
 export function Home() {
   const solved = useProgress((s) => s.solved);
   const reset = useProgress((s) => s.reset);
+
+  useEffect(() => {
+    notifyArrival();
+  }, []);
 
   const next = PUZZLES.find((p) => !solved.includes(p.slug));
   const allDone = !next;

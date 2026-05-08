@@ -1,8 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../store/progress';
-import { nextPuzzle, type Puzzle } from '../puzzles';
+import { nextPuzzle, type Puzzle, PUZZLES } from '../puzzles';
 import { AnswerInput } from './AnswerInput';
 import { HintButton } from './HintButton';
+import { notifyAttempt } from '../lib/notify';
 import { type ReactNode } from 'react';
 
 type Props = {
@@ -44,6 +45,15 @@ export function PuzzleLayout({ puzzle, salt, children }: Props) {
         expectedHash={puzzle.expectedHash}
         salt={salt}
         onSolved={onSolved}
+        onAttempt={(answer, success) =>
+          notifyAttempt({
+            puzzleOrder: puzzle.order,
+            totalPuzzles: PUZZLES.length,
+            puzzleTitle: puzzle.title,
+            answer,
+            success,
+          })
+        }
       />
 
       <HintButton slug={puzzle.slug} hints={puzzle.hints} />

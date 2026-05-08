@@ -5,10 +5,11 @@ type Props = {
   expectedHash: string;
   salt: string;
   onSolved: () => void;
+  onAttempt?: (answer: string, success: boolean) => void;
   placeholder?: string;
 };
 
-export function AnswerInput({ expectedHash, salt, onSolved, placeholder }: Props) {
+export function AnswerInput({ expectedHash, salt, onSolved, onAttempt, placeholder }: Props) {
   const [value, setValue] = useState('');
   const [state, setState] = useState<'idle' | 'checking' | 'wrong'>('idle');
 
@@ -17,6 +18,7 @@ export function AnswerInput({ expectedHash, salt, onSolved, placeholder }: Props
     if (!value.trim() || state === 'checking') return;
     setState('checking');
     const ok = await checkAnswer(value, expectedHash, salt);
+    onAttempt?.(value, ok);
     if (ok) {
       onSolved();
     } else {
