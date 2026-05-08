@@ -12,7 +12,7 @@ export function Home() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center px-5 text-center">
       <img
-        src={`${import.meta.env.BASE_URL}image1.png`}
+        src={`${import.meta.env.BASE_URL}image1.jpg`}
         alt=""
         className="w-full max-w-sm mb-8 rounded-lg"
       />
