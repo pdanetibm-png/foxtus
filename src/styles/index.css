@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    @apply min-h-screen bg-night text-fog font-serif antialiased;
+    background-image: radial-gradient(
+      ellipse at top,
+      rgba(224, 122, 63, 0.08),
+      transparent 60%
+    );
+  }
+
+  input,
+  textarea,
+  button {
+    @apply font-serif;
+  }
+}
+
+@layer utilities {
+  .tap-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
