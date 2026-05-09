@@ -22,11 +22,11 @@ export const PUZZLES: Puzzle[] = [
     order: 2,
     title: 'II — Le commencement',
     Component: CommencementPuzzle,
-    // TODO: placeholder — réponse "blanc". À remplacer par un vrai souvenir.
+    // SHA-256 de "198604" salé avec foxtus-dev-salt
     expectedHashes: [
-      '21a76881e9278f41cdf9a1d4020b0ab3be3c7843ddd1745be38df5233b786c82',
+      '856cbff673f0c62da864808c6bf1c704a524fa36f03451dddfb89ae46bc2ef65',
     ],
-    hints: ['Indice placeholder — à remplacer quand le contenu réel sera défini.'],
+    hints: ['mais c\'est évident'],
   },
 ];
 

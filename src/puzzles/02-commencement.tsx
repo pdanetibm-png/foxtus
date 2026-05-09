@@ -7,8 +7,7 @@ export default function CommencementPuzzle() {
       </aside>
 
       <p>
-        {/* TODO: contenu de l'énigme 2 — placeholder pour valider la mécanique */}
-        Pour t’échauffer : quelle est la couleur du cheval blanc d’Henri IV ?
+        Quel est le nombre d’or entre 1 et 1 000 000 ?
       </p>
     </>
   );
