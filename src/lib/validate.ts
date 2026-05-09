@@ -17,11 +17,11 @@ export async function sha256Hex(input: string): Promise<string> {
 
 export async function checkAnswer(
   raw: string,
-  expectedHashHex: string,
+  expectedHashes: string[],
   salt: string,
 ): Promise<boolean> {
   const normalized = normalizeAnswer(raw);
   if (!normalized) return false;
   const hash = await sha256Hex(`${salt}:${normalized}`);
-  return hash === expectedHashHex;
+  return expectedHashes.includes(hash);
 }

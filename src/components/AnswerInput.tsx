@@ -2,14 +2,14 @@ import { useState, type FormEvent } from 'react';
 import { checkAnswer } from '../lib/validate';
 
 type Props = {
-  expectedHash: string;
+  expectedHashes: string[];
   salt: string;
   onSolved: () => void;
   onAttempt?: (answer: string, success: boolean) => void;
   placeholder?: string;
 };
 
-export function AnswerInput({ expectedHash, salt, onSolved, onAttempt, placeholder }: Props) {
+export function AnswerInput({ expectedHashes, salt, onSolved, onAttempt, placeholder }: Props) {
   const [value, setValue] = useState('');
   const [state, setState] = useState<'idle' | 'checking' | 'wrong'>('idle');
 
@@ -17,7 +17,7 @@ export function AnswerInput({ expectedHash, salt, onSolved, onAttempt, placehold
     e.preventDefault();
     if (!value.trim() || state === 'checking') return;
     setState('checking');
-    const ok = await checkAnswer(value, expectedHash, salt);
+    const ok = await checkAnswer(value, expectedHashes, salt);
     onAttempt?.(value, ok);
     if (ok) {
       onSolved();

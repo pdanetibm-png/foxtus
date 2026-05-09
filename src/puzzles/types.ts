@@ -6,6 +6,6 @@ export type Puzzle = {
   title: string;
   subtitle?: string;
   Component: ComponentType;
-  expectedHash: string;
+  expectedHashes: string[];
   hints: string[];
 };

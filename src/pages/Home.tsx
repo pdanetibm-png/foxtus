@@ -23,8 +23,10 @@ export function Home() {
         className="w-full max-w-sm mb-8 rounded-lg"
       />
       <p className="text-fog/80 max-w-md italic mb-10 leading-relaxed">
-        Tu as ouvert la boite et tu penses que c’était dur ? Ce n’est que le
-        début. Ce qui suit ne se résout qu’une étape à la fois.
+        Tu as ouvert la boîte et tu penses que c’était dur ? Ce n’est que le
+        début. Une boîte, ça se vole, ça se brise — et je préfère m’assurer
+        que c’est bien toi, la foxtus, qui es là. Plusieurs questions vont
+        vérifier. Si tu es la bonne, tu passeras.
       </p>
 
       {!allDone ? (

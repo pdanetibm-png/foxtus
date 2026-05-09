@@ -42,7 +42,7 @@ export function PuzzleLayout({ puzzle, salt, children }: Props) {
       </section>
 
       <AnswerInput
-        expectedHash={puzzle.expectedHash}
+        expectedHashes={puzzle.expectedHashes}
         salt={salt}
         onSolved={onSolved}
         onAttempt={(answer, success) =>
