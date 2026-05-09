@@ -26,7 +26,6 @@ jobs:
       - run: npm ci
       - name: Build
         env:
-          VITE_PUZZLE_SALT: ${{ secrets.VITE_PUZZLE_SALT }}
           VITE_NTFY_TOPIC: ${{ secrets.VITE_NTFY_TOPIC }}
         run: npm run build
       - uses: actions/configure-pages@v5

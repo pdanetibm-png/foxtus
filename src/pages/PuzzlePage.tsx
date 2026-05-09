@@ -4,7 +4,7 @@ import { useProgress } from '../store/progress';
 import { PuzzleLayout } from '../components/PuzzleLayout';
 import { Lockscreen } from '../components/Lockscreen';
 
-const SALT = import.meta.env.VITE_PUZZLE_SALT ?? 'foxtus-dev-salt';
+const SALT = import.meta.env.VITE_PUZZLE_SALT || 'foxtus-dev-salt';
 
 export function PuzzlePage() {
   const { slug = '' } = useParams();
