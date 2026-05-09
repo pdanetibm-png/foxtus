@@ -10,10 +10,10 @@ export const PUZZLES: Puzzle[] = [
     order: 1,
     title: 'I — La boîte',
     Component: IntroPuzzle,
-    // SHA-256 de "un boulon" et "boulon" salés avec foxtus-dev-salt
+    // SHA-256 de "puzzle" et "un puzzle" salés avec foxtus-dev-salt
     expectedHashes: [
-      '68fdaa65450404832bb347a322a054dbc9aa52254bb54f43a33762972184a6ac',
-      'c32a6b776296293934e13936a17a226e515c0cb2b7415600dd8db37349b27cf8',
+      'bab89e3560c71474b31ea0443fb514438c16812338bc824bc8d78c1ce22e69c9',
+      '193281d797e1d47e4bbea6234bdae23d0ddb0c8dd9232a695aa46182d493c23b',
     ],
     hints: ['Non vraiment ?! Tu veux un indice pour ça ...'],
   },
