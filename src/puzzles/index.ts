@@ -1,6 +1,7 @@
 import type { Puzzle } from './types';
 import IntroPuzzle from './01-intro';
 import CommencementPuzzle from './02-commencement';
+import LieuPuzzle from './03-lieu';
 
 export type { Puzzle } from './types';
 
@@ -26,7 +27,16 @@ export const PUZZLES: Puzzle[] = [
     expectedHashes: [
       '856cbff673f0c62da864808c6bf1c704a524fa36f03451dddfb89ae46bc2ef65',
     ],
-    hints: ['mais c\'est évident'],
+    hints: ['Nombre à 6 chiffres', 'Le mois ou tout à changé'],
+  },
+  {
+    slug: 'lieu',
+    order: 3,
+    title: 'III — Le lieu',
+    Component: LieuPuzzle,
+    // TODO: à remplacer quand la question et la réponse seront définies
+    expectedHashes: [],
+    hints: [],
   },
 ];
 
