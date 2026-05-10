@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 const TARGET_LAT = 48.65245275302803;
 const TARGET_LNG = 2.2810737795599527;
-const RADIUS_M = 50;
+const RADIUS_M = 100;
 
 function haversineM(lat1: number, lng1: number, lat2: number, lng2: number): number {
   const R = 6_371_000;
