@@ -43,6 +43,7 @@ export function PuzzleLayout({ puzzle, salt, children }: Props) {
 
       {puzzle.expectedHashes.length > 0 && (
         <AnswerInput
+          key={puzzle.slug}
           expectedHashes={puzzle.expectedHashes}
           salt={salt}
           onSolved={onSolved}
