@@ -41,20 +41,22 @@ export function PuzzleLayout({ puzzle, salt, children }: Props) {
         {children}
       </section>
 
-      <AnswerInput
-        expectedHashes={puzzle.expectedHashes}
-        salt={salt}
-        onSolved={onSolved}
-        onAttempt={(answer, success) =>
-          notifyAttempt({
-            puzzleOrder: puzzle.order,
-            totalPuzzles: PUZZLES.length,
-            puzzleTitle: puzzle.title,
-            answer,
-            success,
-          })
-        }
-      />
+      {puzzle.expectedHashes.length > 0 && (
+        <AnswerInput
+          expectedHashes={puzzle.expectedHashes}
+          salt={salt}
+          onSolved={onSolved}
+          onAttempt={(answer, success) =>
+            notifyAttempt({
+              puzzleOrder: puzzle.order,
+              totalPuzzles: PUZZLES.length,
+              puzzleTitle: puzzle.title,
+              answer,
+              success,
+            })
+          }
+        />
+      )}
 
       <HintButton slug={puzzle.slug} hints={puzzle.hints} />
     </main>

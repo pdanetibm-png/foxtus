@@ -34,9 +34,9 @@ export const PUZZLES: Puzzle[] = [
     order: 3,
     title: 'III — Le lieu',
     Component: LieuPuzzle,
-    // TODO: à remplacer quand la question et la réponse seront définies
+    // Pas de réponse à saisir : la validation se fait via GPS dans le composant
     expectedHashes: [],
-    hints: [],
+    hints: ['Un verre de champagne t\'y attend.'],
   },
 ];
 

@@ -23,9 +23,9 @@ export function Home() {
         className="w-full max-w-sm mb-8 rounded-lg"
       />
       <p className="text-fog/80 max-w-md italic mb-10 leading-relaxed">
-        Tu as ouvert la boîte et tu penses que c’était dur ? Ce n’est que le
-        début. Une boîte, ça se vole, ça se brise — et je préfère m’assurer
-        que c’est bien toi, la foxtus, qui es là. Plusieurs questions vont
+        Tu as ouvert la boîte, fait le puzzle et tu penses que c’était dur ? Ce n’est que le
+        début. Une boîte, ça se vole, ça se brise ... et je préfère m’assurer
+        que c’est bien toi, la foxtus, qui es là. Plusieurs questions vont donc le
         vérifier. Si tu es la bonne, tu passeras.
       </p>
 

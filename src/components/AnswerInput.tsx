@@ -17,7 +17,12 @@ export function AnswerInput({ expectedHashes, salt, onSolved, onAttempt, placeho
     e.preventDefault();
     if (!value.trim() || state === 'checking') return;
     setState('checking');
-    const ok = await checkAnswer(value, expectedHashes, salt);
+    let ok = false;
+    try {
+      ok = await checkAnswer(value, expectedHashes, salt);
+    } catch {
+      ok = false;
+    }
     onAttempt?.(value, ok);
     if (ok) {
       onSolved();
