@@ -62,6 +62,12 @@ export default function LieuPuzzle() {
 
   return (
     <>
+      <img
+        src={`${import.meta.env.BASE_URL}image2.png`}
+        alt=""
+        className="w-full max-w-sm mx-auto mb-8 rounded-lg"
+      />
+
       {state === 'idle' && (
         <>
           <p className="mb-6">Cette étape ne peut se débloquer qu'à un endroit précis.</p>
