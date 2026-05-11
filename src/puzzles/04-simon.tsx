@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../store/progress';
 import { nextPuzzle, PUZZLES } from './index';
@@ -34,10 +34,12 @@ type Phase = 'idle' | 'showing' | 'playing' | 'wrong' | 'won';
 
 function useTone() {
   const ctxRef = useRef<AudioContext | null>(null);
-  return function play(freq: number, ms = 320) {
+  return useCallback((freq: number, ms = 320) => {
     try {
       if (!ctxRef.current) {
-        const Ctx = window.AudioContext ?? (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+        const Ctx =
+          window.AudioContext ??
+          (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
         ctxRef.current = new Ctx();
       }
       const ctx = ctxRef.current;
@@ -55,7 +57,7 @@ function useTone() {
     } catch {
       // audio is non-essential
     }
-  };
+  }, []);
 }
 
 function randomColor(): Color {
