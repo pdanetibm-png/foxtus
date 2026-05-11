@@ -2,6 +2,7 @@ import type { Puzzle } from './types';
 import IntroPuzzle from './01-intro';
 import CommencementPuzzle from './02-commencement';
 import LieuPuzzle from './03-lieu';
+import SimonPuzzle from './04-simon';
 
 export type { Puzzle } from './types';
 
@@ -37,6 +38,17 @@ export const PUZZLES: Puzzle[] = [
     // Pas de réponse à saisir : la validation se fait via GPS dans le composant
     expectedHashes: [],
     hints: ['Un verre de champagne t\'y attend.'],
+  },
+  {
+    slug: 'simon',
+    order: 4,
+    title: 'IV — La mémoire',
+    Component: SimonPuzzle,
+    // Auto-validation via mini-jeu : pas de réponse à taper
+    expectedHashes: [],
+    hints: [
+      'La séquence change à chaque essai. Tu peux la refaire autant de fois que tu veux.',
+    ],
   },
 ];
 
