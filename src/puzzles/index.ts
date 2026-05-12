@@ -3,6 +3,7 @@ import IntroPuzzle from './01-intro';
 import CommencementPuzzle from './02-commencement';
 import LieuPuzzle from './03-lieu';
 import SimonPuzzle from './04-simon';
+import AquariumPuzzle from './05-aquarium';
 
 export type { Puzzle } from './types';
 
@@ -48,6 +49,22 @@ export const PUZZLES: Puzzle[] = [
     expectedHashes: [],
     hints: [
       'La séquence change à chaque essai. Tu peux la refaire autant de fois que tu veux.',
+    ],
+  },
+  {
+    slug: 'aquarium',
+    order: 5,
+    title: 'V — L\'aquarium',
+    Component: AquariumPuzzle,
+    // SHA-256 de "0", "zero", "aucun" salés avec foxtus-dev-salt
+    expectedHashes: [
+      'd860858049d0c7905cff8e1cfc84af6bd15f2c3723dec8b6208448d25f173e70',
+      'ada557314535ff01b775ec905327c22e52b4516f8e59f9db0929156cf05bade6',
+      '4d0289dc0acfdbbe8da04ab06b2f394fd85b677fbd3434f87645de9e2503e9e9',
+    ],
+    hints: [
+      'Sois précise sur l\'espèce, pas seulement sur la couleur.',
+      'L\'eau de l\'aquarium est salée. Lui, non.',
     ],
   },
 ];
