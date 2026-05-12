@@ -20,10 +20,25 @@ function haversineM(lat1: number, lng1: number, lat2: number, lng2: number): num
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
+type Temperature = {
+  label: string;
+  emoji: string;
+  color: string;
+};
+
+function tempFromDistance(d: number): Temperature {
+  if (d < 500) return { label: 'bouillante', emoji: '🔥', color: 'text-red-400' };
+  if (d < 2_000) return { label: 'chaude', emoji: '🥵', color: 'text-orange-400' };
+  if (d < 5_000) return { label: 'tiède', emoji: '🌡️', color: 'text-yellow-300' };
+  if (d < 10_000) return { label: 'froide', emoji: '🥶', color: 'text-blue-300' };
+  return { label: 'gelée', emoji: '🧊', color: 'text-cyan-200' };
+}
+
 type State = 'idle' | 'checking' | 'unlocked' | 'wrong-place' | 'denied';
 
 export default function LieuPuzzle() {
   const [state, setState] = useState<State>('idle');
+  const [lastTemp, setLastTemp] = useState<Temperature | null>(null);
   const solve = useProgress((s) => s.solve);
   const navigate = useNavigate();
 
@@ -33,13 +48,14 @@ export default function LieuPuzzle() {
       (pos) => {
         const d = haversineM(pos.coords.latitude, pos.coords.longitude, TARGET_LAT, TARGET_LNG);
         const ok = d <= RADIUS_M;
+        const temp = tempFromDistance(d);
         const puzzle = PUZZLES.find((p) => p.slug === SLUG);
         if (puzzle) {
           notifyAttempt({
             puzzleOrder: puzzle.order,
             totalPuzzles: PUZZLES.length,
             puzzleTitle: puzzle.title,
-            answer: `(GPS ${Math.round(d)} m)`,
+            answer: `(GPS ${Math.round(d)} m — ${temp.label})`,
             success: ok,
           });
         }
@@ -52,6 +68,7 @@ export default function LieuPuzzle() {
             else navigate('/final');
           }, 1200);
         } else {
+          setLastTemp(temp);
           setState('wrong-place');
         }
       },
@@ -98,9 +115,12 @@ export default function LieuPuzzle() {
         </>
       )}
 
-      {state === 'wrong-place' && (
+      {state === 'wrong-place' && lastTemp && (
         <>
-          <p className="text-red-400 mb-6">Tu n'es pas au bon endroit.</p>
+          <p className="text-fog/80 mb-2">Tu n'es pas au bon endroit.</p>
+          <p className={`text-2xl font-semibold mb-6 ${lastTemp.color}`}>
+            Tu es <strong>{lastTemp.label}</strong> {lastTemp.emoji}
+          </p>
           <button
             onClick={check}
             className="tap-target px-7 py-4 rounded-lg bg-ember text-night font-semibold text-lg"
