@@ -5,74 +5,49 @@ import { nextPuzzle, PUZZLES } from './index';
 import { notifyAttempt } from '../lib/notify';
 
 const SLUG = 'lieu';
-const TARGET_LAT = 48.65245275302803;
-const TARGET_LNG = 2.2810737795599527;
-const RADIUS_M = 100;
 
-function haversineM(lat1: number, lng1: number, lat2: number, lng2: number): number {
-  const R = 6_371_000;
-  const toRad = (d: number) => (d * Math.PI) / 180;
-  const dLat = toRad(lat2 - lat1);
-  const dLng = toRad(lng2 - lng1);
-  const a =
-    Math.sin(dLat / 2) ** 2 +
-    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2;
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-}
-
-type Temperature = {
-  label: string;
-  emoji: string;
-  color: string;
-};
-
-function tempFromDistance(d: number): Temperature {
-  if (d < 500) return { label: 'bouillante', emoji: '🔥', color: 'text-red-400' };
-  if (d < 2_000) return { label: 'chaude', emoji: '🥵', color: 'text-orange-400' };
-  if (d < 5_000) return { label: 'tiède', emoji: '🌡️', color: 'text-yellow-300' };
-  if (d < 10_000) return { label: 'froide', emoji: '🥶', color: 'text-blue-300' };
-  return { label: 'gelée', emoji: '🧊', color: 'text-cyan-200' };
-}
-
-type State = 'idle' | 'checking' | 'unlocked' | 'wrong-place' | 'denied';
+type State = 'idle' | 'checking' | 'unlocked';
 
 export default function LieuPuzzle() {
   const [state, setState] = useState<State>('idle');
-  const [lastTemp, setLastTemp] = useState<Temperature | null>(null);
   const solve = useProgress((s) => s.solve);
   const navigate = useNavigate();
 
+  function unlock(answer: string) {
+    const puzzle = PUZZLES.find((p) => p.slug === SLUG);
+    if (puzzle) {
+      notifyAttempt({
+        puzzleOrder: puzzle.order,
+        totalPuzzles: PUZZLES.length,
+        puzzleTitle: puzzle.title,
+        answer,
+        success: true,
+      });
+    }
+    setState('unlocked');
+    solve(SLUG);
+    const next = nextPuzzle(SLUG);
+    setTimeout(() => {
+      if (next) navigate(`/puzzle/${next.slug}`);
+      else navigate('/final');
+    }, 1200);
+  }
+
   function check() {
     setState('checking');
+    // Toute position valide cette étape. On tente une lecture GPS à titre
+    // indicatif (pour la notif), mais le déblocage ne dépend plus de la distance.
+    if (!navigator.geolocation) {
+      unlock('(GPS indisponible)');
+      return;
+    }
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        const d = haversineM(pos.coords.latitude, pos.coords.longitude, TARGET_LAT, TARGET_LNG);
-        const ok = d <= RADIUS_M;
-        const temp = tempFromDistance(d);
-        const puzzle = PUZZLES.find((p) => p.slug === SLUG);
-        if (puzzle) {
-          notifyAttempt({
-            puzzleOrder: puzzle.order,
-            totalPuzzles: PUZZLES.length,
-            puzzleTitle: puzzle.title,
-            answer: `(GPS ${Math.round(d)} m — ${temp.label})`,
-            success: ok,
-          });
-        }
-        if (ok) {
-          setState('unlocked');
-          solve(SLUG);
-          const next = nextPuzzle(SLUG);
-          setTimeout(() => {
-            if (next) navigate(`/puzzle/${next.slug}`);
-            else navigate('/final');
-          }, 1200);
-        } else {
-          setLastTemp(temp);
-          setState('wrong-place');
-        }
+        unlock(
+          `(GPS ${pos.coords.latitude.toFixed(5)}, ${pos.coords.longitude.toFixed(5)})`,
+        );
       },
-      () => setState('denied'),
+      () => unlock('(GPS refusé)'),
       { enableHighAccuracy: true, timeout: 10_000 },
     );
   }
@@ -99,35 +74,6 @@ export default function LieuPuzzle() {
 
       {state === 'checking' && (
         <p className="text-fog/60 italic">Localisation en cours…</p>
-      )}
-
-      {state === 'denied' && (
-        <>
-          <p className="text-red-400 mb-6">
-            Tu dois autoriser la géolocalisation pour continuer.
-          </p>
-          <button
-            onClick={check}
-            className="tap-target px-7 py-4 rounded-lg bg-ember text-night font-semibold text-lg"
-          >
-            Réessayer
-          </button>
-        </>
-      )}
-
-      {state === 'wrong-place' && lastTemp && (
-        <>
-          <p className="text-fog/80 mb-2">Tu n'es pas au bon endroit.</p>
-          <p className={`text-2xl font-semibold mb-6 ${lastTemp.color}`}>
-            Tu es <strong>{lastTemp.label}</strong> {lastTemp.emoji}
-          </p>
-          <button
-            onClick={check}
-            className="tap-target px-7 py-4 rounded-lg bg-ember text-night font-semibold text-lg"
-          >
-            Réessayer
-          </button>
-        </>
       )}
 
       {state === 'unlocked' && (
